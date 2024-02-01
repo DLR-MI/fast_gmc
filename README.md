@@ -24,9 +24,12 @@ Installation can be done through ```pip``` or by building the extensions directl
 ### Dependencies
 This build depends ```CMake (>=3.0)```.
 #### Local install (Linux / Windows)
-Download and install from CMake website: [official site](https://cmake.org/download/) 
+Download and install from CMake website: [official site](https://cmake.org/download/)
+Be sure to update your environment variables to contain your downloaded CMake.
+On Linux this can be done with ```export PATH=<path-to-cmake-dir>/bin:$PATH```.
 #### Global install (Linux)
 ```sudo apt-get install cmake```
+CMake will be automatically added to PATH variable.
 
 ### Install using PIP (recommended)
 This works currently ONLY inside a Conda environment.
