@@ -1,0 +1,8 @@
+# GMC Python bindings
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fast_gmc"  # as it would appear on PyPI
+version = "0.0.2"
