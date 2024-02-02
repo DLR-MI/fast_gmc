@@ -59,7 +59,7 @@ def init():
         package_dir={'fast_gmc': 'src/fast_gmc'},
         package_data={'fast_gmc': ['build/*.so']},
         zip_safe=False,
-        url='https://gitlab.dlr.de/mi/marlin/fast-gmc',
+        url='https://github.com/DLR-MI/fast_gmc',
         python_requires='>=3.7',
         keywords=['gmc', 'camera compensation', 'tracking']
     )
