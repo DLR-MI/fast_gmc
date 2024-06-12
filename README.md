@@ -13,7 +13,7 @@ prev = cv.imread('warp_test_0.jpg')
 curr = cv.imread('warp_test_1.jpg')
 
 # Run the actual gmc
-mat = gmc(curr, prev, downscale=4)
+mat = gmc(curr, prev, downscale=4, model='affine')  # or model='homography'
 
 print("Transformation matrix:\n{}".format(mat))
 ```

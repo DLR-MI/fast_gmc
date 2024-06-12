@@ -7,12 +7,12 @@ from fast_gmc import gmc
 def test_gmc():
     """Simple test to show how to use GMC and how it performs.
     """
-    curr_dir = os.path.dirname(os.path.realpath(__file__))    
+    curr_dir = os.path.dirname(os.path.realpath(__file__))
     prev = cv.imread(os.path.join(curr_dir, 'warp_test_0.jpg'))
     curr = cv.imread(os.path.join(curr_dir, 'warp_test_1.jpg'))
 
     # Run the actual gmc
-    mat = gmc(curr, prev, downscale=4)
+    mat = gmc(curr, prev, downscale=4, model='affine')  # or model='homography'
 
     warped = cv.warpPerspective(curr, mat, (curr.shape[1], curr.shape[0]))
 
