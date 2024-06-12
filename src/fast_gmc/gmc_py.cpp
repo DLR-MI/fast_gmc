@@ -15,14 +15,17 @@ namespace py = pybind11;
  * @param currFrame Current video frame
  * @param prevFrame Previous video frame
  * @param downscale Downscaling factor to scale the frames and matrix.
+ * @param model Can be "affine" or "homography" to indicate if affine or perspective warping should be performed.
  * @return 3x3 transformation matrix as Numpy Array.
 **/
-py::array_t<float> gmc(cv::Mat currFrame, cv::Mat prevFrame, int downscale) {
+py::array_t<float> gmc(cv::Mat currFrame, cv::Mat prevFrame, int downscale, const std::string &model) {
+    int motionModel = model == "affine" ? cv::videostab::MM_SIMILARITY : (model == "homography" ? cv::videostab::MM_HOMOGRAPHY : cv::videostab::MM_UNKNOWN);
+    if (motionModel == cv::videostab::MM_UNKNOWN)
+	throw std::invalid_argument("Parameter 'model' must be 'affine' or 'homography'");
+
     cv::Mat frame, preframe;
-    cv::Ptr<cv::videostab::MotionEstimatorRansacL2> est = cv::makePtr<cv::videostab::MotionEstimatorRansacL2>(
-            cv::videostab::MM_HOMOGRAPHY);
-    cv::Ptr<cv::videostab::KeypointBasedMotionEstimator> kbest = cv::makePtr<cv::videostab::KeypointBasedMotionEstimator>(
-            est);
+    auto est = cv::makePtr<cv::videostab::MotionEstimatorRansacL2>(motionModel);
+    auto kbest = cv::makePtr<cv::videostab::KeypointBasedMotionEstimator>(est);
     cv::Size downSize(currFrame.cols / downscale, currFrame.rows / downscale);
     cv::resize(currFrame, frame, downSize, cv::INTER_LINEAR);//
 
@@ -49,9 +52,9 @@ py::array_t<float> gmc(cv::Mat currFrame, cv::Mat prevFrame, int downscale) {
 }
 
 PYBIND11_MODULE(gmc_pybind, m) {
-    m.def("GMC", [](py::array_t<uint8_t> &curr_frame, py::array_t<uint8_t> &prev_frame, int downscale) {
+    m.def("GMC", [](py::array_t<uint8_t> &curr_frame, py::array_t<uint8_t> &prev_frame, int downscale, const::string &model) {
         cv::Mat currFrame(curr_frame.shape(0), curr_frame.shape(1), CV_8UC3, (unsigned char *) curr_frame.data());
         cv::Mat prevFrame(prev_frame.shape(0), prev_frame.shape(1), CV_8UC3, (unsigned char *) prev_frame.data());
-        return gmc(currFrame, prevFrame, downscale);
+        return gmc(currFrame, prevFrame, downscale, model);
     }, "Global camera motion compensation using OpenCVs video stabilization classes.");
 }
