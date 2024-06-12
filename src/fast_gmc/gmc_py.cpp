@@ -53,7 +53,7 @@ py::array_t<float> gmc(cv::Mat currFrame, cv::Mat prevFrame, int downscale, cons
 }
 
 PYBIND11_MODULE(gmc_pybind, m) {
-    m.def("GMC", [](py::array_t<uint8_t> &curr_frame, py::array_t<uint8_t> &prev_frame, int downscale, const::string &model) {
+    m.def("GMC", [](py::array_t<uint8_t> &curr_frame, py::array_t<uint8_t> &prev_frame, int downscale, const std::string &model) {
         cv::Mat currFrame(curr_frame.shape(0), curr_frame.shape(1), CV_8UC3, (unsigned char *) curr_frame.data());
         cv::Mat prevFrame(prev_frame.shape(0), prev_frame.shape(1), CV_8UC3, (unsigned char *) prev_frame.data());
         return gmc(currFrame, prevFrame, downscale, model);
