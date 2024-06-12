@@ -20,7 +20,7 @@ namespace py = pybind11;
 py::array_t<float> gmc(cv::Mat currFrame, cv::Mat prevFrame, int downscale) {
     cv::Mat frame, preframe;
     cv::Ptr<cv::videostab::MotionEstimatorRansacL2> est = cv::makePtr<cv::videostab::MotionEstimatorRansacL2>(
-            cv::videostab::MM_SIMILARITY);
+            cv::videostab::MM_HOMOGRAPHY);
     cv::Ptr<cv::videostab::KeypointBasedMotionEstimator> kbest = cv::makePtr<cv::videostab::KeypointBasedMotionEstimator>(
             est);
     cv::Size downSize(currFrame.cols / downscale, currFrame.rows / downscale);
