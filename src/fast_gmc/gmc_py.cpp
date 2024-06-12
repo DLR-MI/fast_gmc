@@ -20,7 +20,7 @@ namespace py = pybind11;
  * @return 3x3 transformation matrix as Numpy Array.
 **/
 py::array_t<float> gmc(cv::Mat currFrame, cv::Mat prevFrame, int downscale, const std::string &model) {
-    int motionModel = model == "affine" ? cv::videostab::MM_SIMILARITY : (model == "homography" ? cv::videostab::MM_HOMOGRAPHY : cv::videostab::MM_UNKNOWN);
+    cv::videostab::MotionModel motionModel = model == "affine" ? cv::videostab::MM_SIMILARITY : (model == "homography" ? cv::videostab::MM_HOMOGRAPHY : cv::videostab::MM_UNKNOWN);
     if (motionModel == cv::videostab::MM_UNKNOWN)
 	throw std::invalid_argument("Parameter 'model' must be 'affine' or 'homography'");
 
