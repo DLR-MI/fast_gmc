@@ -2,6 +2,7 @@
 #include <typeinfo>
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
+#include <string>
 
 #include "opencv2/core.hpp"
 #include "opencv2/video.hpp"
